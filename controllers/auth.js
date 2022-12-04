@@ -47,7 +47,12 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
 	try {
 		const { email, password } = req.body;
+
+		console.log('email', email);
 		const foundUser = await getUser(email);
+
+		console.log('foundUser', foundUser);
+
 		if (foundUser.error) return res.status(400).json({ msg: foundUser.error });
 
 		if (foundUser.data) {
@@ -59,8 +64,8 @@ export const login = async (req, res) => {
 				{ id: foundUser.data._id },
 				process.env.JWT_SECRET
 			);
-			delete foundUser.data.password;
 			res.status(200).json({ token, foundUser });
+			delete foundUser.data.password;
 		}
 	} catch (err) {
 		res.status(500).json({ error: err.message });

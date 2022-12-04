@@ -1,13 +1,12 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import multer from 'multer';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { dbConnection } from './models/db/connection.js';
 
 /* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
@@ -24,25 +23,10 @@ app.use(cors());
 // Local path to keep all assets. In production, the content will be persisted to s3 or similar storage services
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
-/* FILE STORAGE */
-const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, 'public/assets');
-	},
-	filename: function (req, file, cb) {
-		cb(null, file.originalname);
-	},
-});
-
-const upload = multer({ storage });
-
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
-mongoose
-	.connect(process.env.MONGO_DB_URI, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	})
+
+dbConnection
 	.then(() => {
 		app.listen(PORT, () => console.log(`Connected to Server Port: ${PORT}`));
 	})

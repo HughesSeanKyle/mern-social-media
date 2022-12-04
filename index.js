@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import authRoutes from './routes/auth.js';
 import { upload } from './middleware/multer/upload.js';
 import { register } from './controllers/auth.js';
 import { dbConnection } from './models/db/connection.js';
@@ -25,8 +26,11 @@ app.use(cors());
 // Local path to keep all assets. In production, the content will be persisted to s3 or similar storage services
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
-/* ROUTES WITH FILES */
-app.post('/auth/register', upload.single('picture'), register);
+// /* ROUTES WITH FILES */
+// app.post('/auth/register', upload.single('picture'), register);
+
+/* ROUTES */
+app.use('/auth', authRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;

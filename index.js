@@ -39,15 +39,11 @@ const upload = multer({ storage });
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
 mongoose
-	.connect(process.env.MONGO_URL, {
+	.connect(process.env.MONGO_DB_URI, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 	})
 	.then(() => {
-		app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
-
-		/* ADD DATA ONE TIME */
-		// User.insertMany(users);
-		// Post.insertMany(posts);
+		app.listen(PORT, () => console.log(`Connected to Server Port: ${PORT}`));
 	})
 	.catch((error) => console.log(`${error} did not connect`));

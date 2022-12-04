@@ -64,8 +64,10 @@ export const login = async (req, res) => {
 				{ id: foundUser.data._id },
 				process.env.JWT_SECRET
 			);
-			res.status(200).json({ token, foundUser });
+
+			// Remove password from response
 			delete foundUser.data.password;
+			res.status(200).json({ token, foundUser });
 		}
 	} catch (err) {
 		res.status(500).json({ error: err.message });

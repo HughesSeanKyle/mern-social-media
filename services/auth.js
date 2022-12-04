@@ -12,6 +12,15 @@ export const createUser = async ({
 	occupation,
 }) => {
 	try {
+		const userExists = await User.findOne({ email: email });
+
+		if (userExists) {
+			return {
+				data: null,
+				error: 'User already exists',
+			};
+		}
+
 		const newUser = new User({
 			firstName,
 			lastName,

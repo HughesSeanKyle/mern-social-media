@@ -30,11 +30,13 @@ export const register = async (req, res) => {
 			occupation,
 		});
 
+		if (createNewUser.error) {
+			res.status(409).json({ msg: createNewUser.error });
+		}
+
 		if (createNewUser.data) {
 			// 201 = created
-			res.status(201).json(createNewUser.data);
-		} else {
-			res.status(500).json(createNewUser.error);
+			res.status(201).json({ data: createNewUser.data });
 		}
 	} catch (err) {
 		res.status(500).json({ error: err.message });

@@ -26,7 +26,7 @@ app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
 
-dbConnection
+dbConnection()
 	.then(() => {
 		app.listen(PORT, () => console.log(`Connected to Server Port: ${PORT}`));
 	})

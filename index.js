@@ -7,8 +7,8 @@ import morgan from 'morgan';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import authRoutes from './routes/auth.js';
-import { upload } from './middleware/multer/upload.js';
-import { register } from './controllers/auth.js';
+import userRoutes from './routes/users.js';
+import postRoutes from './routes/posts.js';
 import { dbConnection } from './models/db/connection.js';
 
 /* CONFIGURATIONS */
@@ -31,6 +31,8 @@ app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 /* ROUTES */
 app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/posts', postRoutes);
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;

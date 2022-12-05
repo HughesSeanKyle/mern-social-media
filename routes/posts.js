@@ -11,7 +11,7 @@ import { verifyToken } from '../middleware/auth.js';
 const router = express.Router();
 
 /* CREATE */
-router.post('/post', upload.single('picture'), createPost);
+router.post('/post', verifyToken, upload.single('picture'), createPost);
 
 /* READ */
 router.get('/', verifyToken, getFeedPosts);

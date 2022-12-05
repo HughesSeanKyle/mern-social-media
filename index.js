@@ -26,9 +26,6 @@ app.use(cors());
 // Local path to keep all assets. In production, the content will be persisted to s3 or similar storage services
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
-// /* ROUTES WITH FILES */
-// app.post('/auth/register', upload.single('picture'), register);
-
 /* ROUTES */
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);

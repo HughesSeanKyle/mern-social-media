@@ -10,19 +10,29 @@ export const createNewPost = async ({ userId, description, picturePath }) => {
 			firstName: user.firstName,
 			lastName: user.lastName,
 			location: user.location,
-			description,
+			description: description,
 			userPicturePath: user.picturePath,
-			picturePath,
+			picturePath: picturePath,
 			likes: {},
 			comments: [],
 		});
-		await newPost.save();
 
-		const post = await Post.find();
+		const savedNewPost = await newPost.save();
 
-		if (post) {
+		console.log('savedNewPost', savedNewPost);
+
+		// const post = await Post.find();
+		// const post = await Post.findOne({ id: savedNewPost.id });
+
+		/*
+			Two issues 
+			1. Upload not persisting to public folder 
+			2. Incorrect description db 
+		*/
+
+		if (savedNewPost) {
 			return {
-				data: post,
+				data: savedNewPost,
 				error: null,
 			};
 		}

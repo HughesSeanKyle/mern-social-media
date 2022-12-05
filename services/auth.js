@@ -55,10 +55,12 @@ export const getUser = async (email) => {
 	try {
 		const user = await User.findOne({ email: email });
 
+		console.log('user', user);
+
 		if (!user) {
 			return {
 				data: null,
-				error: 'Username or email does not exist',
+				error: 'User does not exist',
 			};
 		}
 

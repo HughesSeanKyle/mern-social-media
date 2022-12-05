@@ -14,13 +14,23 @@ export const createPost = async (req, res) => {
 			picturePath,
 		});
 
+		const updatedPostsFeed = await Post.find();
+
 		if (createdPost.data) {
-			return res.status(201).json({ data: createdPost.data, error: null });
+			return res
+				.status(201)
+				.json({
+					data: {
+						createdPost: createdPost.data,
+						updatedFeed: updatedPostsFeed,
+					},
+					error: null,
+				});
 		} else {
-			return res.status(500).json({ data: null, error: createdPost.error });
+			return res.status(409).json({ data: null, error: createdPost.error });
 		}
 	} catch (err) {
-		res.status(500).json({ data: null, error: err.message });
+		res.status(409).json({ data: null, error: err.message });
 	}
 };
 

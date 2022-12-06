@@ -20,16 +20,6 @@ export const createNewPost = async ({ userId, description, picturePath }) => {
 		const savedNewPost = await newPost.save();
 
 		console.log('savedNewPost', savedNewPost);
-
-		// const post = await Post.find();
-		// const post = await Post.findOne({ id: savedNewPost.id });
-
-		/*
-			Two issues 
-			1. Upload not persisting to public folder 
-			2. Incorrect description db 
-		*/
-
 		if (savedNewPost) {
 			return {
 				data: savedNewPost,

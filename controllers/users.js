@@ -41,20 +41,15 @@ export const addRemoveFriend = async (req, res) => {
 		const friend = await User.findById(friendId);
 
 		if (user.friends.includes(friendId)) {
-			// Remove "Friend" from "User" friend list and remove "User" from "Friend" friend list
 			user.friends = user.friends.filter((id) => id !== friendId);
 			friend.friends = friend.friends.filter((id) => id !== id);
 		} else {
-			// Add "Friend" to "User" friend list and add "User" to "Friend" friend list
 			user.friends.push(friendId);
 			friend.friends.push(id);
 		}
-
-		// Persist updated props
 		await user.save();
 		await friend.save();
 
-		// Get updated "User" friend list
 		const friends = await Promise.all(
 			user.friends.map((id) => User.findById(id))
 		);
@@ -64,7 +59,6 @@ export const addRemoveFriend = async (req, res) => {
 			}
 		);
 
-		// Return updated and formatted "User" friend list
 		res.status(200).json({ data: formattedFriends, error: null });
 	} catch (err) {
 		res.status(404).json({ data: null, error: err.message });

@@ -34,6 +34,11 @@ app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
 
+/* TEST ROUTE */
+app.get('/test-get', (req, res) => {
+	res.send('Hello from the root route. Update, Two three four ');
+});
+
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 3001;
 
